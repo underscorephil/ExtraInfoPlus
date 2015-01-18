@@ -24,7 +24,9 @@ set workList to {{"note", "map", "mapx", "mmap", "outline"}, ¬
 	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindnode", ext:"mindnode", appname:"MindNode Pro"}, ¬
 	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"map.itm", ext:"itmz", appname:"iThoughtsX"}, ¬
 	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindmanager", ext:"mmap", appname:"Mindjet MindManager"}, ¬
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"OmniOutliner"}}
+	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"OmniOutliner"}, ¬
+	{docPath:"/Users/_phil/SpiderOak Hive/notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"Evernote"}, ¬
+	{docPath:"https://github.com/", template:"Template.opml", ext:"opml", appname:"github"}}
 
 
 -- Change nothing bellow this point unless you know what you're doing. Magic starts here.
@@ -85,6 +87,17 @@ to accessInfo(_name, _path, _ext, _appname, _template)
 					do shell script "cp " & quoted form of _template_path & " " & _path & _template
 					my updateTemplate(_path & _template, _name, _appname, _path)
 					do shell script "open -a " & quoted form of _appname & " " & quoted form of extraInfo
+					else if _appname is "Evernote" then
+					if application "Evernote" is not running then
+						launch application "Evernote"
+						delay 3
+					end if
+					tell application id "com.evernote.evernote"
+						set query string of window 1 to _name
+					end tell
+				else if _appname is "github" then
+					open location _path & _name
+
 				else if _appname is "Mindjet MindManager" then
 					set tmpFolder to extraInfo & ".tmp"
 					do shell script "cp -r " & quoted form of _template_path & " " & quoted form of tmpFolder
@@ -248,3 +261,4 @@ end urlencode
 --
 --  You should have received a copy of the GNU General Public License
 --  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
