@@ -25,8 +25,8 @@ set workList to {{"note", "map", "mapx", "mmap", "outline"}, ¬
 	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"map.itm", ext:"itmz", appname:"iThoughtsX"}, ¬
 	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindmanager", ext:"mmap", appname:"Mindjet MindManager"}, ¬
 	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"OmniOutliner"}, ¬
-	{docPath:"/Users/_phil/SpiderOak Hive/notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"Evernote"}, ¬
-	{docPath:"https://github.com/", template:"Template.opml", ext:"opml", appname:"github"}}
+	{docPath:"n/a", template:"n/a", ext:"na", appname:"Evernote"}, ¬
+	{docPath:"https://github.com/", template:"n/a", ext:"n/a", appname:"github"}}
 
 
 -- Change nothing bellow this point unless you know what you're doing. Magic starts here.
@@ -62,8 +62,6 @@ tell application "TaskPaper"
 	end tell
 end tell
 
-
-
 to accessInfo(_name, _path, _ext, _appname, _template)
 	set extraInfo to _path & snr("/", "_", _name) & "." & _ext
 	set extraAlias to extraInfo as POSIX file
@@ -97,7 +95,6 @@ to accessInfo(_name, _path, _ext, _appname, _template)
 					end tell
 				else if _appname is "github" then
 					open location _path & _name
-
 				else if _appname is "Mindjet MindManager" then
 					set tmpFolder to extraInfo & ".tmp"
 					do shell script "cp -r " & quoted form of _template_path & " " & quoted form of tmpFolder
@@ -112,7 +109,8 @@ to accessInfo(_name, _path, _ext, _appname, _template)
 						do shell script "open -a " & quoted form of _appname & " " & quoted form of extraInfo
 					end if
 				end if
-				my displayMessage("Operations", "Created New File", "Successfully Created and Opened " & _name & "." & _ext)
+				-- uncomment if you want a success message
+				-- my displayMessage("Operations", "Created New File", "Successfully Created and Opened " & _name & "." & _ext)
 			on error
 				my displayMessage("Errors", "Error", "Problem Creating/Opening " & _name & "." & _ext)
 			end try
