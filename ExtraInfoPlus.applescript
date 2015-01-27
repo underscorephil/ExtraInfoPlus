@@ -17,14 +17,14 @@
 -- Set your variables here
 --
 -- The folder where your templates are stored, must end in trailing slash
-property templateFolder : "/Users/ttscoff/Dropbox/Notes/Templates/"
+property templateFolder : "/Users/_phil/Documents/projects/ExtraInfoPlus"
 -- Your keywords for app triggers, and their associated target paths, template names, extension and app name
 set workList to {{"note", "map", "mapx", "mmap", "outline", "evernote", "github"}, Â
-	{docPath:"/Users/ttscoff/Dropbox/nvALT2.2/", template:"Template.md", ext:"md", appname:"nvALT"}, Â
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindnode", ext:"mindnode", appname:"MindNode Pro"}, Â
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"map.itm", ext:"itmz", appname:"iThoughtsX"}, Â
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindmanager", ext:"mmap", appname:"Mindjet MindManager"}, Â
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"OmniOutliner"}, Â
+	{docPath:"/Users/_phil/Documents/notes/", template:"Template.md", ext:"md", appname:"nvALT"}, Â
+	{docPath:"/Users/_phil/Documents/notes/maps/", template:"Template.mindnode", ext:"mindnode", appname:"MindNode Pro"}, Â
+	{docPath:"/Users/_phil/Documents/notes/maps/", template:"map.itm", ext:"itmz", appname:"iThoughtsX"}, Â
+	{docPath:"/Users/_phil/Documents/notes/maps/", template:"Template.mindmanager", ext:"mmap", appname:"Mindjet MindManager"}, Â
+	{docPath:"/Users/_phil/Documents/notes/list/", template:"Template.opml", ext:"opml", appname:"OmniOutliner"}, Â
 	{docPath:"n/a", template:"n/a", ext:"na", appname:"Evernote"}, Â
 	{docPath:"https://github.com/", template:"n/a", ext:"n/a", appname:"github"}}
 
