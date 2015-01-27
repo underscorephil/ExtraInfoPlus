@@ -19,13 +19,13 @@
 -- The folder where your templates are stored, must end in trailing slash
 property templateFolder : "/Users/ttscoff/Dropbox/Notes/Templates/"
 -- Your keywords for app triggers, and their associated target paths, template names, extension and app name
-set workList to {{"note", "map", "mapx", "mmap", "outline"}, Â¬
-	{docPath:"/Users/ttscoff/Dropbox/nvALT2.2/", template:"Template.md", ext:"md", appname:"nvALT"}, Â¬
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindnode", ext:"mindnode", appname:"MindNode Pro"}, Â¬
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"map.itm", ext:"itmz", appname:"iThoughtsX"}, Â¬
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindmanager", ext:"mmap", appname:"Mindjet MindManager"}, Â¬
-	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"OmniOutliner"}, Â¬
-	{docPath:"n/a", template:"n/a", ext:"na", appname:"Evernote"}, Â¬
+set workList to {{"note", "map", "mapx", "mmap", "outline", "evernote", "github"}, Â
+	{docPath:"/Users/ttscoff/Dropbox/nvALT2.2/", template:"Template.md", ext:"md", appname:"nvALT"}, Â
+	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindnode", ext:"mindnode", appname:"MindNode Pro"}, Â
+	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"map.itm", ext:"itmz", appname:"iThoughtsX"}, Â
+	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.mindmanager", ext:"mmap", appname:"Mindjet MindManager"}, Â
+	{docPath:"/Users/ttscoff/Dropbox/Notes/Brainstorming/", template:"Template.opml", ext:"opml", appname:"OmniOutliner"}, Â
+	{docPath:"n/a", template:"n/a", ext:"na", appname:"Evernote"}, Â
 	{docPath:"https://github.com/", template:"n/a", ext:"n/a", appname:"github"}}
 
 
@@ -62,12 +62,13 @@ tell application "TaskPaper"
 	end tell
 end tell
 
+
 to accessInfo(_name, _path, _ext, _appname, _template)
 	set extraInfo to _path & snr("/", "_", _name) & "." & _ext
 	set extraAlias to extraInfo as POSIX file
 	set _template_path to templateFolder & _template
 	tell application "Finder"
-
+		
 		if exists extraAlias then
 			try
 				if _appname is "nvALT" then
@@ -85,7 +86,7 @@ to accessInfo(_name, _path, _ext, _appname, _template)
 					do shell script "cp " & quoted form of _template_path & " " & _path & _template
 					my updateTemplate(_path & _template, _name, _appname, _path)
 					do shell script "open -a " & quoted form of _appname & " " & quoted form of extraInfo
-					else if _appname is "Evernote" then
+				else if _appname is "Evernote" then
 					if application "Evernote" is not running then
 						launch application "Evernote"
 						delay 3
@@ -114,10 +115,10 @@ to accessInfo(_name, _path, _ext, _appname, _template)
 			on error
 				my displayMessage("Errors", "Error", "Problem Creating/Opening " & _name & "." & _ext)
 			end try
-
+			
 		end if
 	end tell
-
+	
 end accessInfo
 
 to updateTemplate(_template, _name, _app, _docPath)
@@ -146,7 +147,7 @@ end updateTemplate
 
 to readFile(unixPath)
 	set foo to (open for access (POSIX file unixPath))
-	set txt to (read foo for (get eof foo) as Â«class utf8Â»)
+	set txt to (read foo for (get eof foo) as Çclass utf8È)
 	close access foo
 	return txt
 end readFile
@@ -164,45 +165,45 @@ to displayMessage(msgName, msgTitle, msgText)
 	tell application "System Events"
 		set growlRunning to (count of (every process whose bundle identifier is "com.Growl.GrowlHelperApp")) > 0
 	end tell
-
+	
 	-- Register Growl
 	if growlRunning then
 		tell application id "com.Growl.GrowlHelperApp"
 			-- Make a list of all the notification types
 			-- that this script will ever send:
-			set the allNotificationsList to Â¬
+			set the allNotificationsList to Â
 				{"Operations", "Errors"}
-
+			
 			-- Make a list of the notifications
 			-- that will be enabled by default.
 			-- Those not enabled by default can be enabled later
 			-- in the 'Applications' tab of the Growl preferences.
-			set the enabledNotificationsList to Â¬
+			set the enabledNotificationsList to Â
 				{"Operations", "Errors"}
-
+			
 			-- Register our script with growl.
 			-- You can optionally (as here) set a default icon
 			-- for this script's notifications.
-			register as application Â¬
-				"TaskPaper Extended Notes" all notifications allNotificationsList Â¬
-				default notifications enabledNotificationsList Â¬
+			register as application Â
+				"TaskPaper Extended Notes" all notifications allNotificationsList Â
+				default notifications enabledNotificationsList Â
 				icon of application "TaskPaper"
 		end tell
 	end if
-
+	
 	-- Display the Message
 	if growlRunning then
 		tell application id "com.Growl.GrowlHelperApp"
-			notify with name Â¬
-				msgName title Â¬
-				msgTitle description Â¬
-				msgText application name Â¬
+			notify with name Â
+				msgName title Â
+				msgTitle description Â
+				msgText application name Â
 				"TaskPaper Extended Notes"
 		end tell
 	else
 		display dialog msgText
 	end if
-
+	
 end displayMessage
 
 --search and replace function for template
@@ -228,7 +229,7 @@ on urlencode(theText) -- http://harvey.nu/applescript_url_encode_routine.html
 		set eachCharNum to ASCII number of eachChar
 		if eachCharNum = 32 then
 			set useChar to "+"
-		else if (eachCharNum â‰  42) and (eachCharNum â‰  95) and (eachCharNum < 45 or eachCharNum > 46) and (eachCharNum < 48 or eachCharNum > 57) and (eachCharNum < 65 or eachCharNum > 90) and (eachCharNum < 97 or eachCharNum > 122) then
+		else if (eachCharNum ­ 42) and (eachCharNum ­ 95) and (eachCharNum < 45 or eachCharNum > 46) and (eachCharNum < 48 or eachCharNum > 57) and (eachCharNum < 65 or eachCharNum > 90) and (eachCharNum < 97 or eachCharNum > 122) then
 			set firstDig to round (eachCharNum / 16) rounding down
 			set secondDig to eachCharNum mod 16
 			if firstDig > 9 then
